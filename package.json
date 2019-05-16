@@ -1,0 +1,24 @@
+{
+  "name": "image_uploader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/whuangz/image_uploader.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/whuangz/image_uploader/issues"
+  },
+  "homepage": "https://github.com/whuangz/image_uploader#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "sharp": "^0.22.1"
+  }
+}
