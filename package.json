@@ -19,6 +19,7 @@
   "homepage": "https://github.com/whuangz/image_uploader#readme",
   "dependencies": {
     "express": "^4.16.4",
+    "jimp": "^0.6.4",
     "sharp": "^0.22.1"
   }
 }
