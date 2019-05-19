@@ -1,38 +1,28 @@
 const express = require("express");
-const Jimp = require("jimp")
+const generator = require("./lib/generator");
+const singleUploader = require("./lib/singleUpload");
+const Multer = require('multer');
 
 const app = express();
 
-//GET Image URL
-app.get("/:image", (req, res, next) => {
-	var image = req.params.image;
-	var width = parseInt(req.query.width);
-	var height = parseInt(req.query.height);
-
-	if (isNaN(width) || width == 0){
-		width = Jimp.AUTO
-	}
-
-	if (isNaN(height) || height == 0){
-		height = Jimp.AUTO
-	}
-
-	if (width == -1 && height == -1){
-		res.send('<img src="'+image+'">')
-	}else{
-		Jimp.read(image, (err, img) => {
-			if (err) throw err;
-			img.resize(width,height).getBase64(Jimp.AUTO, (e, img64)=> {
-				if (e) throw e;
-				res.send('<img src="'+img64+'">')
-			});
-		});	
-	}
-	
+const multer = Multer({
+	storage: Multer.MemoryStorage,
+	limits: {
+		fileSize: 100 * 1024 * 1024
+	},
 });
 
-app.post("/upload", (req, res, next) => {
+//GET Image URL
+app.get("/:image", (req, res, next) => {
+	generator(req,res, next);
+});
 
+app.post("/upload", multer.single('image'), singleUploader, (req, res, next) => {
+
+		if (req.file && req.file.gcsUrl) {
+			return res.send(req.file.gcsUrl);
+		}
+		return res.status(500).send("Failed");
 });
 
 
