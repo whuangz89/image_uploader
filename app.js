@@ -1,3 +1,4 @@
+const request = require('request');
 const express = require("express");
 const generator = require("./lib/generator");
 const singleUploader = require("./lib/singleUpload");
@@ -13,8 +14,10 @@ const multer = Multer({
 });
 
 //GET Image URL
-app.get("/:image", (req, res, next) => {
-	generator(req,res, next);
+
+app.get("/*", (req, res, next) => {
+	const imgUrl = "https://" + req.params[0];
+	generator(imgUrl, req, res);
 });
 
 app.post("/upload", multer.single('image'), singleUploader, (req, res, next) => {
